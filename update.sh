@@ -17,6 +17,8 @@
 set -e
 set -o pipefail
 
+IFS=$'\n'
+
 is_first_headline="1"
 function print_headline {
     if test "$#" == "0"; then
@@ -77,22 +79,60 @@ function run_updater {
     update
 }
 
+function find_updaters {
+    if test "$#" == "0"; then
+        echo "Missing script dirs" 1>&2
+        return 2
+    fi
+
+    local script_dirs=("$@")
+
+    local script_filenames=()
+    for script_dir in "${script_dirs[@]}"; do
+        if ! test -d "$script_dir"; then
+            continue
+        fi
+
+        for script_path in "$script_dir"/*.sh; do
+            script_filenames+=("$(basename "$script_path")")
+        done
+    done
+
+    local script_filenames_final=()
+    while read -r script_filename; do
+        script_filenames_final+=("$script_filename")
+    done <<< "$(printf "%s\n" "${script_filenames[@]}" | sort -n | uniq)"
+
+    local script_paths=()
+    for script_filename in "${script_filenames_final[@]}"; do
+        local script_path=""
+        for script_dir in "${script_dirs[@]}"; do
+            if test -f "$script_dir/$script_filename"; then
+                script_path="$script_dir/$script_filename"
+                break
+            fi
+        done
+
+        if test -z "$script_path"; then
+            echo "Unable to find updater $script_filename" 1>&2
+            return 0
+        fi
+
+        script_paths+=("$script_path")
+    done
+
+    echo "${script_paths[*]}"
+}
+
 function main {
     if test "$#" != "0"; then
         echo "Unexpected arguments" 1>&2
         return 2
     fi
 
-    local script_dirs=("/etc/updater.d" "${XDG_CONFIG_HOME:-$HOME/.config}/updater.d")
-
-    for script_dir in "${script_dirs[@]}"; do
-        if ! test -d "$script_dir"; then
-            continue
-        fi
-
-        for script_file in "$script_dir"/*.sh; do
-            run_updater "$script_file" || return $?
-        done
+    local script_paths="$(find_updaters "${XDG_CONFIG_HOME:-$HOME/.config}/updater.d" "/etc/updater.d")"
+    for script_path in $script_paths; do
+        run_updater "$script_path" || return $?
     done
 
     return 0
