@@ -32,18 +32,20 @@ Remove the symlink in `/etc/updater.d/` for the updater.
 
 ```console
 $ update
---------
-| Arch |
---------
+-----------
+| Updater |
+-----------
+Already up to date.
+
+----------
+| Pacman |
+----------
 :: Synchronizing package databases...
  core is up to date
  extra is up to date
 warning: archlinux-keyring-20230704-1 is up to date -- skipping
  there is nothing to do
 :: Starting full system upgrade...
- there is nothing to do
-:: Looking for AUR upgrades...
-:: Looking for devel upgrades...
  there is nothing to do
 
 -----------
