@@ -75,3 +75,9 @@ Devices with no available firmware updates:
 Devices with the latest available firmware version:
  • System Firmware
 ```
+
+## License
+
+Copyright (C) Oliver Amann
+
+This project is licensed under the GNU General Public License Version 3 (GPL-3.0-only). Please see [LICENSE](./LICENSE) for more information.
