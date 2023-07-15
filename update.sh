@@ -29,13 +29,17 @@ function print_headline {
         return 2
     fi
 
-    test "$is_first_headline" == "1" && is_first_headline="0" || echo ""
-
     local label="$1"
+
+    if test "$is_first_headline" == "0"; then
+        echo ""
+    fi
 
     echo "--$(echo "$label" | sed "s/./-/g")--"
     echo "| $label |"
     echo "--$(echo "$label" | sed "s/./-/g")--"
+
+    is_first_headline="0"
 }
 
 function run_updater {
@@ -49,14 +53,14 @@ function run_updater {
         return 2
     fi
 
-    local script_filepath="$1"
-    local script_filename="$(basename "$script_filepath")"
+    local script_path="$1"
+    local script_filename="$(basename "$script_path")"
 
     unset label
     unset -f is_supported
     unset -f update
 
-    source "$script_filepath"
+    source "$script_path"
 
     if test "$(type -t is_supported)" == "function" && ! is_supported; then
         return 0
@@ -66,7 +70,7 @@ function run_updater {
     print_headline "$label"
 
     if ! test "$(type -t update)" == "function"; then
-        echo "[warning] Invalid updater: $script_filepath does not define an update function" 1>&2
+        echo "[warning] Invalid updater: $script_path does not define an update function" 1>&2
         return 0
     fi
 
