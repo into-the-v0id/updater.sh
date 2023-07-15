@@ -11,16 +11,7 @@ Several package managers are supported. See [updater.d](./updater.d) for all ava
 ## Installation
 
 ```console
-# # Install updater source code
-# mkdir -p /usr/local/share/updater/
-# cd /usr/local/share/updater/
-# git clone https://github.com/into-the-v0id/updater.sh.git .
-# # Install updater executable
-# chmod +x ./update.sh
-# ln -s /usr/local/share/updater/update.sh /usr/local/bin/update
-# # Install updater configuration
-# mkdir -p /etc/updater.d/
-# ln -s /usr/local/share/updater/updater.d/*.sh /etc/updater.d/
+$ curl -sSf "https://raw.githubusercontent.com/into-the-v0id/updater.sh/main/install.sh" | sudo bash
 ```
 
 ## Usage
