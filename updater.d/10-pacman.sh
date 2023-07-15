@@ -5,5 +5,5 @@ function is_supported {
 }
 
 function update {
-    pacman -Sy && pacman -S --needed archlinux-keyring && pacman -Su
+    sudo pacman -Sy && sudo pacman -S --needed archlinux-keyring && sudo pacman -Su
 }
