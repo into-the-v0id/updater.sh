@@ -15,6 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 set -e
+set -u
 set -o pipefail
 
 IFS=$'\n'
@@ -62,7 +63,7 @@ function run_updater {
     unset -f is_supported
     unset -f update
 
-    source "$script_path"
+    source "$script_path" || return $?
 
     if test "$(type -t is_supported)" == "function" && ! is_supported; then
         return 0
@@ -76,7 +77,7 @@ function run_updater {
         return 0
     fi
 
-    update
+    update || return $?
 }
 
 function find_updaters {
@@ -130,7 +131,8 @@ function main {
         return 2
     fi
 
-    local script_paths="$(find_updaters "${XDG_CONFIG_HOME:-$HOME/.config}/updater.d" "/etc/updater.d")"
+    local script_paths=""
+    script_paths="$(find_updaters "${XDG_CONFIG_HOME:-$HOME/.config}/updater.d" "/etc/updater.d")" || return $?
     for script_path in $script_paths; do
         run_updater "$script_path" || return $?
     done
