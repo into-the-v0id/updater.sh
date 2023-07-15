@@ -6,7 +6,7 @@ Update your system with a single command
 
 This script calls various package managers in order to update your system.
 
-Several package managers are supported. See [update.d](./update.d) for all available updaters.
+Several package managers are supported. See [updater.d](./updater.d) for all available updaters.
 
 ## Installation
 
@@ -20,7 +20,7 @@ Several package managers are supported. See [update.d](./update.d) for all avail
 # ln -s /usr/local/share/updater/update.sh /usr/local/bin/update
 # # Install updater configuration
 # mkdir -p /etc/updater.d/
-# ln -s /usr/local/share/updater/update.d/*.sh /etc/updater.d/
+# ln -s /usr/local/share/updater/updater.d/*.sh /etc/updater.d/
 ```
 
 ## Usage

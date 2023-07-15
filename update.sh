@@ -79,7 +79,7 @@ function main {
         return 2
     fi
 
-    local script_dirs=("/etc/update.d" "${XDG_CONFIG_HOME:-$HOME/.config}/update.d")
+    local script_dirs=("/etc/updater.d" "${XDG_CONFIG_HOME:-$HOME/.config}/updater.d")
 
     for script_dir in "${script_dirs[@]}"; do
         if ! test -d "$script_dir"; then
