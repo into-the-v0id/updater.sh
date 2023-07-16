@@ -5,5 +5,5 @@ function is_supported {
 }
 
 function update {
-    yay -Sy && yay -S --needed archlinux-keyring && yay -Su
+    yay --aur -Syu
 }

@@ -5,5 +5,5 @@ function is_supported {
 }
 
 function update {
-    paru -Sy && paru -S --needed archlinux-keyring && paru -Su
+    paru --aur -Syu
 }
