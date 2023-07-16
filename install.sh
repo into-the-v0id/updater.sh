@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
+set -u
 set -o pipefail
 
 src_dir="/usr/local/share/updater"
