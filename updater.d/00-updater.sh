@@ -6,8 +6,13 @@ function update {
 
     local old_updaters="$src_dir/updater.d"/*.sh
 
-    cd "$src_dir" || return $?
-    sudo git pull || return $?
+    local src_owner=""
+    src_owner="$(find "$src_dir" -maxdepth 0 -type d -printf "%U")" || return $?
+    if test "$src_owner" == "$(id -u)"; then
+        git -C "$src_dir" pull || return $?
+    else
+        sudo git -C "$src_dir" pull || return $?
+    fi
 
     local new_updaters="$src_dir/updater.d"/*.sh
 
