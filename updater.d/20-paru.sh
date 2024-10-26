@@ -5,5 +5,5 @@ function is_supported {
 }
 
 function update {
-    paru --aur -Syu
+    paru -Syu
 }

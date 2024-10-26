@@ -5,5 +5,5 @@ function is_supported {
 }
 
 function update {
-    yay --aur -Syu
+    yay -Syu
 }
