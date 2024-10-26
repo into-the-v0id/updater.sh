@@ -18,6 +18,9 @@ function update {
 
     if test "${old_updaters[*]}" != "${new_updaters[*]}"; then
         echo ""
-        echo "Some updaters have changed. You may need to review your configuration."
+        echo "Some updaters have changed. You may need to update your configuration:"
+        echo ""
+        echo "    sudo ln -sv \"$src_dir/updater.d\"/* /etc/updater.d/ # add new updaters"
+        echo "    sudo find /etc/updater.d/ -xtype l -print -delete # remove old updaters"
     fi
 }
