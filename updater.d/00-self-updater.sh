@@ -1,4 +1,4 @@
-label=Updater
+label="Self Updater"
 
 function update {
     local src_dir=""
